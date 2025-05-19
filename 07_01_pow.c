@@ -1,6 +1,8 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+
+#include <stdint.h>
 #include <math.h>
 
 typedef struct queue_node {
@@ -11,7 +13,7 @@ typedef struct queue_node {
 
 qu_n *new_queue () {
     qu_n *qu = (qu_n *) malloc(sizeof(qu_n));
-    qu->val = -1;
+    qu->val = 0;
     qu->next = qu;
     qu->prev = qu;
 
@@ -62,14 +64,14 @@ long long int recursive_pow (int a, int n, qu_n *pow_qu) {
     result_2 = recursive_pow(a, n_half, pow_qu);
 
     if (n % 2 != 0) {
-        result_2 *= recursive_pow(a, 1, pow_qu);
+        result_2 *= (long long int) a;
     }
 
     if (result_1 > pow_qu->next->val) {
         enqueue(pow_qu, result_1);
     }
 
-    return result_1 * result_2;
+    return (long long int) result_1 * (long long int) result_2;
 }
 
 int main (int args, char **argv) {
@@ -83,7 +85,7 @@ int main (int args, char **argv) {
 
     for (i = 0; i < input_number; i++) {
         fscanf(stdin, "%d\t%d", &input_a, &input_n);
-        result = recursive_pow(input_a, input_n, pow_queue);
+        result = (long long int) recursive_pow(input_a, input_n, pow_queue);
 
         enqueue(pow_queue, result);
         
